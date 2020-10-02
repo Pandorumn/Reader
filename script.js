@@ -26,9 +26,9 @@ getData('rus').then(() => {
     const i2 = randNum(data['rus'].length);
     indexes['rus'].push(i1, i2);
 
-    cards.left.textContent = null;
-    cards.center.textContent = data['rus'][i1];
-    cards.right.textContent = data['rus'][i2];
+    cards.left.innerHTML = null;
+    cards.center.innerHTML = data['rus'][i1];
+    cards.right.innerHTML = data['rus'][i2];
 });
 // getData('eng');
 
@@ -58,7 +58,7 @@ function moveBack() {
     indexPrev = indexes['rus'][indexes['rus'].length - 3 - offsetBack];
     cardContainer.prepend(cards.right);
     updateLinks();
-    cards.left.textContent = data['rus'][indexPrev];
+    cards.left.innerHTML = data['rus'][indexPrev];
     if (!indexPrev) {
         btnPrev.disabled = true;
     }
