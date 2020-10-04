@@ -7,7 +7,7 @@ const cards = {
 const btnPrev = document.querySelector('.btn-prev');
 const btnNext = document.querySelector('.btn-next');
 
-const url = './dicts/';
+const url = '../dicts/';
 // const url = 'https://klava.org/delta/dicts/';
 // const url = 'gs://react-my-burger-10-a7502.appspot.com/';
 
