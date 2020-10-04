@@ -7,30 +7,21 @@ const cards = {
 const btnPrev = document.querySelector('.btn-prev');
 const btnNext = document.querySelector('.btn-next');
 
-const url = '../dicts/';
-// const url = 'https://klava.org/delta/dicts/';
-// const url = 'gs://react-my-burger-10-a7502.appspot.com/';
+const url = '../dicts/eng_adv.txt';
 
-const data = {
-    rus: [],
-    eng: [],
-};
-const indexes = {
-    rus: [],
-    eng: [],
-};
+let data = [];
+const indexes = [];
 let offsetBack = 0;
 
-getData('eng').then(() => {
-    const i1 = randNum(data['eng'].length);
-    const i2 = randNum(data['eng'].length);
-    indexes['eng'].push(i1, i2);
+getData().then(() => {
+    const i1 = randNum(data.length);
+    const i2 = randNum(data.length);
+    indexes.push(i1, i2);
 
     cards.left.innerHTML = null;
-    cards.center.innerHTML = data['eng'][i1];
-    cards.right.innerHTML = data['eng'][i2];
+    cards.center.innerHTML = data[i1];
+    cards.right.innerHTML = data[i2];
 });
-// getData('eng');
 
 btnPrev.addEventListener('click', moveBack);
 btnNext.addEventListener('click', moveNext);
@@ -39,11 +30,11 @@ function randNum(max) {
     return Math.floor(Math.random() * max);
 }
 
-function getData(lang) {
-    return fetch(url + `${lang}_adv.txt`)
+function getData() {
+    return fetch(url)
         .then((response) => response.text())
         .then((text) => {
-            data[lang] = text.split('\n');
+            data = text.split('\n');
         });
 }
 
@@ -55,10 +46,10 @@ function updateLinks() {
 
 function moveBack() {
     offsetBack++;
-    indexPrev = indexes['eng'][indexes['eng'].length - 3 - offsetBack];
+    indexPrev = indexes[indexes.length - 3 - offsetBack];
     cardContainer.prepend(cards.right);
     updateLinks();
-    cards.left.innerHTML = data['eng'][indexPrev];
+    cards.left.innerHTML = data[indexPrev];
     if (!indexPrev) {
         btnPrev.disabled = true;
     }
@@ -69,13 +60,13 @@ function moveNext() {
 
     if (offsetBack > 0) {
         offsetBack--;
-        indexNext = indexes['eng'][indexes['eng'].length - 1 - offsetBack];
+        indexNext = indexes[indexes.length - 1 - offsetBack];
     } else {
-        indexNext = randNum(data['eng'].length); // Create and push new index
-        indexes['eng'].push(indexNext);
+        indexNext = randNum(data.length); // Create and push new index
+        indexes.push(indexNext);
     }
     cardContainer.append(cards.left); // Shift cards left
     updateLinks();
-    cards.right.textContent = data['eng'][indexNext]; // Set text of right card
+    cards.right.textContent = data[indexNext]; // Set text of right card
     btnPrev.disabled = false;
 }
